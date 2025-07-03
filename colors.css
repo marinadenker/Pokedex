@@ -1,0 +1,98 @@
+.normal {
+    background: #bfbfbf;
+    background: linear-gradient(0deg, #bfbfbf 0%, #eaeaea 100%);
+}
+
+.fighting {
+    background: #b12a27;
+    background: linear-gradient(0deg, #b12a27 0%, #d84541 100%);
+}
+
+.flying {
+    background: #86b2e3;
+    background: linear-gradient(0deg, #86b2e3 0%, #c4e0ff 100%);
+}
+
+.poison {
+    background: #8948c6;
+    background: linear-gradient(0deg, #8948c6 0%, #a379e7 100%);
+}
+
+.ground {
+    background: #907458;
+    background: linear-gradient(0deg, #907458 0%, #ab947d 100%);
+}
+
+.rock {
+    background: #7d766f;
+    background: linear-gradient(0deg, #7d766f 0%, #afa192 100%);
+}
+
+.bug {
+    background: #a1b047;
+    background: linear-gradient(0deg, #a1b047 0%, #bdcd62 100%);
+}
+
+.ghost {
+    background: #6e6081;
+    background: linear-gradient(0deg, #6e6081 0%, #6971a2 100%);
+}
+
+.steel {
+    background: #1f5b7f;
+    background: linear-gradient(0deg, #1f5b7f 0%, #31a0bb 100%);
+}
+
+.fire {
+    background: #f5834b;
+    background: linear-gradient(0deg, #f5834b 0%, #ffa46d 100%);
+}
+
+.water {
+    background: #4469a5;
+    background: linear-gradient(0deg, #4469a5 0%, #79a2e7 100%);
+}
+
+.grass {
+    background: #5ca857;
+    background: linear-gradient(0deg, #5ca857 0%, #95e490 100%);
+}
+
+.electric {
+    background: #efb743;
+    background: linear-gradient(0deg, #efb743 0%, #fed754 100%);
+}
+
+.psychic {
+    background: #e56666;
+    background: linear-gradient(0deg, #e56666 0%, #fc9494 100%);
+}
+
+.ice {
+    background: #4d8c91;
+    background: linear-gradient(0deg, #4d8c91 0%, #a1e3e2 100%);
+}
+
+.dragon {
+    background: #3758c5;
+    background: linear-gradient(0deg, #3758c5 0%, #4b72f1 100%);
+}
+
+.dark {
+    background: #1e1e1e;
+    background: linear-gradient(0deg, #1e1e1e 0%, #303030 100%);
+}
+
+.fairy {
+    background: #f3c0da;
+    background: linear-gradient(0deg, #f3c0da 0%, #fde4e0 100%);
+}
+
+.stellar {
+    background: #d998e9;
+    background: linear-gradient(0deg, #d998e9 0%, #93bfe8 35%, #9cf4e9 65%, #fc9494 100%);
+}
+
+.unknown {
+    background: #bbbbbb;
+}

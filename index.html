@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="colors.css">
+    <script src="./script.js"></script>
+    <script src="./templates.js"></script>
+</head>
+
+<body onload="onloadFunc()">
+    <div id="pokemon-info-modal" class="modal" tabindex="-1"></div>
+<div class="content">
+    <header>
+        <img class="header-img" src="./images/Pokeball.svg"><h2>Pokedex</h2>
+    </header>
+    <section id="content">
+    </div>
+    <button class="btn btn-primary" onclick="loadMore()">lade mehr</button>
+    <footer></footer>
+</div>
+<div id="loadingspinner" class="loadingoverlay">
+    <div class="spinner-border text-danger" role="status"></div>
+    <span class="sr-only text-white">Loading...</span>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js">
+</script>
+</body>
+
+</html>
