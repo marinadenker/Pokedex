@@ -1,4 +1,5 @@
-let firstLoad = 10;
+let firstLoad = 20;
+let currentPokemon;
 
 async function onloadFunc() {
   loadPokemon();
@@ -32,35 +33,8 @@ async function renderPokemonCard(allPokemon) {
   });
 }
 
-function getTypesOfPokemon(pokemon) {
-  let allTypes = "";
-  let types = pokemon["types"];
-  for (let i = 0; i < types.length; i++) {
-    const element = types[i];
-    allTypes += `<span class="badge badge-pill badge-secondary">${element["type"]["name"]}</span>`;
-  }
-  return allTypes;
-}
-
-function getTypesOfPokemonIcon(pokemon) {
-  let allTypes = "";
-  let types = pokemon["types"];
-  for (let i = 0; i < types.length; i++) {
-    const element = types[i];
-    allTypes += ` 
-            <div class="type-icon-container">
-            <div class="type-icon ${element["type"]["name"]}" style="border-radius: 20px;">
-              <img src="images/${element["type"]["name"]}.svg" alt="${element["type"]["name"]}" class="type-svg">
-            </div>
-            <p class="type basic-info">${element["type"]["name"]}</p>
-            </div>
-    `;
-  }
-  return allTypes;
-}
 
 // Dialog
-let currentPokemon;
 async function showDialog(id) {
   await getPokemonDetailData(id);
   genModalDialog();
@@ -95,7 +69,7 @@ async function renderDialogNew(id) {
 
 
 async function getPokemonDetailData(id){
-  const url = `https://pokeapi.co/api/v2/pokemon/${id}/`;
+  const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
   currentPokemon = await fetchPokemon(url);
 }
 
@@ -106,8 +80,48 @@ async function fetchPokemonCharacteristics(id) {
   return pokemonCharacteristics;
 }
 
+async function getEvolutionChainUrl(id){
+  const url = `https://pokeapi.co/api/v2/pokemon-species/${id}/`;
+  const evoResponse = await fetch(url);
+  const pokemonEvolution = await evoResponse.json();
+  return pokemonEvolution.evolution_chain.url;
+}
 
-  // <p>${pokemonCharacteristics["descriptions"][4]["description"]}</p>
+async function fetchPokemonEvolution(id) {
+  const url = await getEvolutionChainUrl(id);
+  const evoResponse = await fetch(url);
+  const pokemonEvolution = await evoResponse.json();
+  return pokemonEvolution;
+}
+
+async function getPokemonEvolutions(){
+  console.log(currentPokemon);
+  let currentEvolution = await fetchPokemonEvolution(currentPokemon.id);
+  let allEvolutions = [];
+  let evolution1 = currentEvolution.chain.evolves_to[0].species.name;
+  let evolution0 = currentEvolution.chain.species.name;
+  allEvolutions.push(evolution0, evolution1);
+  if(currentEvolution.chain.evolves_to[0].evolves_to[0]){
+    let evolution2 = currentEvolution.chain.evolves_to[0].evolves_to[0].species.name;
+    allEvolutions.push(evolution2);
+  }
+  console.log(allEvolutions);
+  return allEvolutions;
+}
+
+async function getEvolutionData(){
+  setActivToNav();
+  document.getElementById("modal-info").innerHTML = "";
+  let pokemonEvolutions = await getPokemonEvolutions();
+  for (let index = 0; index < pokemonEvolutions.length; index++) {
+    const evolutionName = pokemonEvolutions[index];
+    const url = `https://pokeapi.co/api/v2/pokemon/${evolutionName}`;
+    const respJSON = await fetchPokemon(url);
+    console.log(respJSON);
+    genPokemonEvolutions(respJSON);
+  }
+}
+
 
 
 function showModal() {

@@ -52,6 +52,10 @@ header {
     border: none;
 }
 
+.card:hover {
+    transform: scale(1.05);
+}
+
 .card img {
     width: 150px;
     right: 0;
@@ -89,13 +93,23 @@ h4 {
     text-transform: capitalize;
 }
 
+h6 {
+    font-weight: bold;
+}
+
 p.type {
     text-transform: capitalize;
+}
+
+.modal {
+    --bs-modal-padding: 0rem 1rem 1rem 1rem;
 }
 
 .modal-header {
     display: flex;
     flex-direction: column;
+    height: 240px;
+    margin-bottom: -20px;
 }
 
 .modal-header-content {
@@ -106,9 +120,28 @@ p.type {
     --bs-modal-header-padding-y: 0;
 }
 
+.modal-body::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    background-color: white;
+    margin-left: -1rem;
+    margin-top: -60px;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+}
+
 .modal-img {
-    width: 200px;
-    height: 200px;
+    width: 220px;
+    height: 220px;
+    z-index: 2;
+}
+
+.modal-img-center {
+    margin-top: -170px;
+    display: flex;
+    justify-content: center;
 }
 
 .current-pokemon-infos {
@@ -172,8 +205,25 @@ p.type {
     color: #282828;
 }
 
+.nav-item {
+    cursor: pointer;
+}
+
+.bi {
+    cursor: pointer;
+}
+
+.bi:hover {
+    transform: scale(1.1);
+}
+
 .nav-item.active {
     font-weight: bold;
+}
+
+.nav-item:hover {
+    /* text-decoration: underline; */
+    transform: scale(1.1);
 }
 
 .progress-bar {

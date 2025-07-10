@@ -23,18 +23,19 @@ function genModalDialog() {
                     <h4 class="modal-title text-white text-center">${currentPokemon.name}</h4>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <img src="${currentPokemon["sprites"]["other"]["official-artwork"]["front_default"]}" class="modal-img">
                 </div>
+                <div class="modal-img-center"><img src="${currentPokemon["sprites"]["other"]["official-artwork"]["front_default"]}" class="modal-img"></div>
                 <div class="modal-body">
+                <div class="modal-body-content">
                     <div class="nav">
                         <i class="bi bi-chevron-left" onclick="previousPokemon()"></i>
                         <p class="nav-item active" onclick="genAbout()">About</p>
                         <p class="nav-item" onclick="genStatus()">Status</p>
-                        <p class="nav-item" onclick="genMoves()">Moves</p>
+                        <p class="nav-item" onclick="getEvolutionData()">Evolution</p>
                         <i class="bi bi-chevron-right" onclick="nextPokemon()"></i>
                      </div>
-                <div id="modal-info"></div>
-                </div>
+                <div id="modal-info" class="row"></div>
+                </div></div>
             </div>
         </div>
     `;
@@ -45,7 +46,6 @@ function genModalDialog() {
 async function genAbout() {
     setActivToNav();
     let pokemonCharacteristics = await fetchPokemonCharacteristics(currentPokemon.id);
-    console.log(pokemonCharacteristics.descriptions[4].description);
     document.getElementById("modal-info").innerHTML = "";
     document.getElementById("modal-info").innerHTML = `
         <div class="current-pokemon-infos">
@@ -57,13 +57,13 @@ async function genAbout() {
         </div>
         <div class="description">
         <h6>Description</h6>
-        <p>${pokemonCharacteristics.descriptions[4].description}</p>
+        <p>${pokemonCharacteristics.descriptions[7].description}</p>
         </div>
     `;
 }
 
 function genStatus() {
-    setActivToNav();
+  setActivToNav();
   document.getElementById("modal-info").innerHTML = "";
   let stats = currentPokemon["stats"];
     for (let i = 0; i < stats.length; i++) {
@@ -79,7 +79,39 @@ function genStatus() {
     }
 }
 
-function genMoves() {
-    setActivToNav();
-  document.getElementById("modal-info").innerHTML = "";
+function genPokemonEvolutions(pokemon){
+  console.log(pokemon);
+document.getElementById("modal-info").innerHTML += `
+<div class="card col">
+<img src="${pokemon["sprites"]["other"]["official-artwork"]["front_default"]}" class="card-img-top" alt="${pokemon.name}">
+<h5 class="card-title">${pokemon.name}</h5><span class="show-id">#${pokemon.id}</span>
+</div>
+`;
+}
+
+function getTypesOfPokemon(pokemon) {
+  let allTypes = "";
+  let types = pokemon["types"];
+  for (let i = 0; i < types.length; i++) {
+    const element = types[i];
+    allTypes += `<span class="badge badge-pill badge-secondary">${element["type"]["name"]}</span>`;
+  }
+  return allTypes;
+}
+
+function getTypesOfPokemonIcon(pokemon) {
+  let allTypes = "";
+  let types = pokemon["types"];
+  for (let i = 0; i < types.length; i++) {
+    const element = types[i];
+    allTypes += ` 
+            <div class="type-icon-container">
+            <div class="type-icon ${element["type"]["name"]}" style="border-radius: 20px;">
+              <img src="images/${element["type"]["name"]}.svg" alt="${element["type"]["name"]}" class="type-svg">
+            </div>
+            <p class="type basic-info">${element["type"]["name"]}</p>
+            </div>
+    `;
+  }
+  return allTypes;
 }
