@@ -47,7 +47,6 @@ async function renderPokemonCardSearch(allPokemon) {
   }
 }
 
-// Dialog
 async function showDialog(id) {
   await getPokemonDetailData(id);
   genModalDialog();
