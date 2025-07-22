@@ -1,5 +1,6 @@
 let firstLoad = 20;
 let currentPokemon;
+let allLoadedPokemon;
 
 async function onloadFunc() {
   loadPokemon();
@@ -9,10 +10,11 @@ async function loadPokemon() {
   document.getElementById("content").innerHTML = "";
   document.getElementById("loadingspinner").classList.remove("d-none");
   try {
-    let url = `https://pokeapi.co/api/v2/pokemon?offset=0&limit=${firstLoad}`;
-    let response = await fetch(url); // Hole Daten von der angegebenen URL
-    let respJson = await response.json(); // Antwort der API ist im JSON-Format -> wandelt diese in ein JavaScript-Objekt
-    await renderPokemonCard(respJson["results"]); // Aufruf der Funktion mit results-Array aus JSON-Objekt
+    let url = `https://pokeapi.co/api/v2/pokemon/?limit=100000&offset=0`;
+    let response = await fetch(url); // get data from the url
+    let respJson = await response.json(); // answer from API in JSON -> convert into JavaScript-Object
+    allLoadedPokemon = respJson["results"];
+    await renderPokemonCard(respJson["results"]); // call of the function with results-array
   } catch (error) {
     console.error("Error loading data. Error details:" + error);
   } finally {
@@ -26,13 +28,24 @@ async function fetchPokemon(url) {
   return respJSON;
 }
 
-async function renderPokemonCard(allPokemon) {
-  allPokemon.forEach(async (element) => {
-    let pokemon = await fetchPokemon(element.url);
-    genPokemonCard(pokemon);
-  });
+async function renderPokemonCard(allPokemon, dataContainer = 'content') {
+  for (let index = 0; index < firstLoad; index++) {
+    console.log(allPokemon[index]);
+    if(!allPokemon[index]['url']) return;
+  let pokemonUrl = allPokemon[index]['url'];
+    let pokemon = await fetchPokemon(pokemonUrl);
+    genPokemonCard(pokemon, dataContainer);
+  }
 }
 
+async function renderPokemonCardSearch(allPokemon) {
+  for (let index = 0; index < allPokemon.length; index++) {
+    console.log(allPokemon[index]);
+    let pokemonUrl = allPokemon[index]['url'];
+    let pokemon = await fetchPokemon(pokemonUrl);
+    genPokemonCard(pokemon, 'search-content');
+  }
+}
 
 // Dialog
 async function showDialog(id) {
@@ -66,7 +79,6 @@ async function renderDialogNew(id) {
   await getPokemonDetailData(id);
   genModalDialog();
 }
-
 
 async function getPokemonDetailData(id){
   const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
@@ -113,16 +125,14 @@ async function getEvolutionData(){
   setActivToNav();
   document.getElementById("modal-info").innerHTML = "";
   let pokemonEvolutions = await getPokemonEvolutions();
-  for (let index = 0; index < pokemonEvolutions.length; index++) {
-    const evolutionName = pokemonEvolutions[index];
+  for (let i = 0; i < pokemonEvolutions.length; i++) {
+    const evolutionName = pokemonEvolutions[i];
     const url = `https://pokeapi.co/api/v2/pokemon/${evolutionName}`;
     const respJSON = await fetchPokemon(url);
     console.log(respJSON);
     genPokemonEvolutions(respJSON);
   }
 }
-
-
 
 function showModal() {
   let myModal = new bootstrap.Modal(document.getElementById("pokemon-info-modal"), {});
@@ -138,6 +148,40 @@ function setActivToNav() {
     })
   );
 }
+
+// Search Function
+function searchPokemon(){
+  const searchInput = document.getElementById('search-input');
+  const searchTerm = searchInput.value; // get the search input value
+  filterPokemon(searchTerm);
+};
+
+async function filterPokemon(inputValue) {
+  document.getElementById('search-content').innerHTML = '';
+  if (inputValue.length > 2) { // check if input is bigger than 2
+    showSearchContainer(); // show the container in which the searched pokemon will be displayed
+    let searchString = allLoadedPokemon.filter(pokemon => pokemon.name.includes(inputValue.toLowerCase())); // filter the search input and be sure it includes parts of a pokemon name
+    console.log(searchString);
+    renderPokemonCardSearch(searchString);  
+  }
+  else if (inputValue.length == 0) {
+    removeSearchContainer();
+    } 
+}
+
+function showSearchContainer() {
+    document.getElementById('content').classList.add('d-none');
+    document.getElementById('search-content').classList.remove('d-none');
+    document.getElementById('load-more-btn').classList.add('d-none');
+}
+
+function removeSearchContainer() {
+    document.getElementById('content').classList.remove('d-none');
+    document.getElementById('search-content').classList.add('d-none');
+    document.getElementById('load-more-btn').classList.remove('d-none');
+}
+
+
 
 
 

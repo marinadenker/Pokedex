@@ -1,5 +1,5 @@
-function genPokemonCard(pokemon) {
-  document.getElementById("content").innerHTML += `
+function genPokemonCard(pokemon, dataContainer) {
+  document.getElementById(dataContainer).innerHTML += `
     <div class="card ${pokemon["types"][0]["type"]["name"]}" onclick="showDialog(${pokemon["id"]})">
             <div class="pokemon-name">
                 <h5 class="card-title text-white">${pokemon.name}</h5><span class="show-id">#${pokemon.id}</span>
@@ -80,13 +80,12 @@ function genStatus() {
 }
 
 function genPokemonEvolutions(pokemon){
-  console.log(pokemon);
-document.getElementById("modal-info").innerHTML += `
-<div class="card col">
-<img src="${pokemon["sprites"]["other"]["official-artwork"]["front_default"]}" class="card-img-top" alt="${pokemon.name}">
-<h5 class="card-title">${pokemon.name}</h5><span class="show-id">#${pokemon.id}</span>
-</div>
-`;
+  document.getElementById("modal-info").innerHTML += `
+    <div class="col text-center">
+      <img src="${pokemon["sprites"]["other"]["official-artwork"]["front_default"]}" class="evolution-img" alt="${pokemon.name}">
+      <p class="type">${pokemon.name}</p>
+    </div>
+  `;
 }
 
 function getTypesOfPokemon(pokemon) {
