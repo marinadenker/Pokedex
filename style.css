@@ -18,6 +18,10 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     top: 0;
     position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
 
 header {
@@ -188,6 +192,7 @@ p.type {
 .type-icon {
     width: 32px;
     height: 32px;
+    gap: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -203,13 +208,13 @@ p.type {
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    margin-left: 16px;
 }
 
 .type-icons {
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 16px;
 }
 
 .bar-wrapper {
@@ -267,6 +272,10 @@ p.type {
     width: 200px;
 }
 
+.searchbar {
+    justify-content: center;
+}
+
 .search {
     margin-bottom: auto;
     height: 40px;
@@ -314,4 +323,25 @@ p.type {
 
 a:link {
     text-decoration: none;
+}
+
+@media (max-width: 425px){
+
+.nav {
+    gap: 12px;
+}
+
+.current-pokemon-infos {
+    gap: 12px;
+}
+
+header {
+    flex-direction: column;
+    justify-content: end;
+}
+
+.color-bold {
+    font-size: 1.1rem;
+}
+
 }
