@@ -24,22 +24,26 @@
     <div id="pokemon-info-modal" class="modal" tabindex="-1"></div>
 <div class="content">
     <header>
-        <div class="header-title">
-        <h2>Pokedex</h2>
-        </div>
-        <div class="searchbar">
-            <div class="d-flex h-100">
-                <div class="search">
-                    <input id="search-input" type="text" class="search-input" placeholder="search..." onkeydown="searchOnEnter()">
-                    <button id="search-btn" href="#" class="search-icon" onclick="searchPokemon()">
-                        <i class="bi bi-search"></i>
-                    </button>
+        <img class="header-background-img" src="./images/pokemon_header.png">
+        <div class="header-content">
+            <div class="header-title">
+                <h2>Pokedex</h2>
+            </div>
+            <div class="searchbar">
+                <div class="d-flex h-100">
+                    <div class="search">
+                        <input id="search-input" type="text" class="search-input" placeholder="search..." onkeydown="searchOnEnter()">
+                        <button id="search-btn" href="#" class="search-icon" onclick="searchPokemon()">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </header>
     <section id="search-content" class="d-none"></section>
-    <section id="content">
+    <div class="container">
+        <div id="content" class="row gap-3 justify-content-center pt-3"></div>
     </div>
     <div class="mt-4 mb-4">
         <div class="container d-flex justify-content-center">

@@ -12,9 +12,9 @@ async function onloadFunc() {
 async function loadPokemon() {
   document.getElementById("loadingspinner").classList.remove("d-none");
   try {
-    let url = `https://pokeapi.co/api/v2/pokemon/?limit=100000&offset=0`;
-    let response = await fetch(url); // get data from the url
-    let respJson = await response.json(); // answer from API in JSON -> convert into JavaScript-Object
+    const url = `https://pokeapi.co/api/v2/pokemon/?limit=100000&offset=0`;
+    const response = await fetch(url); // get data from the url
+    const respJson = await response.json(); // answer from API in JSON -> convert into JavaScript-Object
     allLoadedPokemon = respJson["results"];
     await renderPokemonCard(); // call of the function
   } catch (error) {
@@ -25,8 +25,8 @@ async function loadPokemon() {
 }
 
 async function fetchPokemon(url) {
-  let resp = await fetch(url);
-  let respJSON = await resp.json();
+  const resp = await fetch(url);
+  const respJSON = await resp.json();
   return respJSON;
 }
 
@@ -40,8 +40,8 @@ async function renderPokemonCard() {
 
 async function renderPokemonCardSearch(allPokemon) {
   for (let index = 0; index < allPokemon.length; index++) {
-    let pokemonUrl = allPokemon[index]["url"];
-    let pokemon = await fetchPokemon(pokemonUrl);
+    const pokemonUrl = allPokemon[index]["url"];
+    const pokemon = await fetchPokemon(pokemonUrl);
     genPokemonCard(pokemon, "search-content");
   }
 }
@@ -102,26 +102,26 @@ function getEnglishFlavorText() {
 
 async function getEvolutionChainUrl(id) {
   const url = `https://pokeapi.co/api/v2/pokemon-species/${id}/`;
-  const evoResponse = await fetch(url);
-  const pokemonEvolution = await evoResponse.json();
-  pokemonSpecies = pokemonEvolution;
+  const pokemonSpeciesResponse = await fetch(url);
+  const pokemonSpeciesJson = await pokemonSpeciesResponse.json();
+  pokemonSpecies = pokemonSpeciesJson;
   await fetchPokemonEvolution();
 }
 
 async function fetchPokemonEvolution() {
-  const evoResponse = await fetch(pokemonSpecies.evolution_chain.url);
-  pokemonEvolution = await evoResponse.json();
+  const evolutionResponse = await fetch(pokemonSpecies.evolution_chain.url);
+  pokemonEvolution = await evolutionResponse.json();
 }
 
 async function getPokemonEvolutions() {
-  let allEvolutions = [];
-  let evolution1 = pokemonEvolution.chain.evolves_to[0].species.name;
-  let evolution0 = pokemonEvolution.chain.species.name;
-  allEvolutions.push(evolution0, evolution1);
+  const allEvolutions = [];
+  const firstEvolution = pokemonEvolution.chain.evolves_to[0].species.name;
+  const baseEvolution = pokemonEvolution.chain.species.name;
+  allEvolutions.push(baseEvolution, firstEvolution);
   if (pokemonEvolution.chain.evolves_to[0].evolves_to[0]) {
-    let evolution2 =
+    const secondEvolution =
       pokemonEvolution.chain.evolves_to[0].evolves_to[0].species.name;
-    allEvolutions.push(evolution2);
+    allEvolutions.push(secondEvolution);
   }
   return allEvolutions;
 }
@@ -130,7 +130,7 @@ let evolutionData = [];
 
 async function getEvolutionData() {
   setActivToNav();
-  let pokemonEvolutions = await getPokemonEvolutions();
+  const pokemonEvolutions = await getPokemonEvolutions();
   evolutionData = [];
   for (let i = 0; i < pokemonEvolutions.length; i++) {
     const evolutionName = pokemonEvolutions[i];
@@ -149,7 +149,7 @@ function showEvolution() {
 }
 
 function showModal() {
-  let myModal = new bootstrap.Modal(
+  const myModal = new bootstrap.Modal(
     document.getElementById("pokemon-info-modal"),
     {}
   );
@@ -186,7 +186,7 @@ async function filterPokemon(inputValue) {
   document.getElementById("search-content").innerHTML = "";
   if (inputValue.length > 2) {
     showSearchContainer();
-    let searchString = allLoadedPokemon.filter((pokemon) =>
+    const searchString = allLoadedPokemon.filter((pokemon) =>
       pokemon.name.includes(inputValue.toLowerCase())
     );
     renderPokemonCardSearch(searchString);
@@ -197,6 +197,28 @@ async function filterPokemon(inputValue) {
       document.getElementById("alert-container").classList.add("d-none");  
     }, 3000);
   }
+}
+
+async function filterPokemon(inputValue) {
+  document.getElementById("search-content").innerHTML = "";
+  if (inputValue.length <= 2) {
+    removeSearchContainer();
+    if (inputValue.length === 0) return;
+      showUserNotification();
+      return;
+  }
+  showSearchContainer();
+  const searchString = allLoadedPokemon.filter((pokemon) =>
+    pokemon.name.includes(inputValue.toLowerCase())
+  );
+  renderPokemonCardSearch(searchString);
+}
+
+function showUserNotification(){
+    document.getElementById("alert-container").classList.remove("d-none");
+    setTimeout(() => {
+      document.getElementById("alert-container").classList.add("d-none");
+    }, 3000);
 }
 
 function showSearchContainer() {
