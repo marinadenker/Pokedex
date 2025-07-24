@@ -168,9 +168,7 @@ function setActivToNav() {
   );
 }
 
-
 // Search Function
-
 function searchOnEnter() {
   if (event.key === "Enter") {
     event.preventDefault();
