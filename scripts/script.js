@@ -168,7 +168,16 @@ function setActivToNav() {
   );
 }
 
+
 // Search Function
+
+function searchOnEnter() {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    searchPokemon();
+  }
+}
+
 function searchPokemon() {
   const searchInput = document.getElementById("search-input");
   const searchTerm = searchInput.value;
@@ -178,13 +187,17 @@ function searchPokemon() {
 async function filterPokemon(inputValue) {
   document.getElementById("search-content").innerHTML = "";
   if (inputValue.length > 2) {
-    showSearchContainer(); // show the container in which the searched pokemon will be displayed
+    showSearchContainer();
     let searchString = allLoadedPokemon.filter((pokemon) =>
       pokemon.name.includes(inputValue.toLowerCase())
-    ); // filter the search input and be sure it includes parts of a pokemon name
+    );
     renderPokemonCardSearch(searchString);
-  } else if (inputValue.length == 0) {
+  } else if (inputValue.length <= 2) {
+    document.getElementById('alert-container').classList.remove("d-none");
     removeSearchContainer();
+    setTimeout(() => {
+      document.getElementById("alert-container").classList.add("d-none");  
+    }, 3000);
   }
 }
 

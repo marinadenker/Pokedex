@@ -16,6 +16,11 @@
 </head>
 
 <body onload="onloadFunc()">
+    <div class="alert-container fadeIn d-none" id="alert-container">
+        <div class="alert alert-warning" role="alert">
+            You have to type at least 3 letters!
+        </div>
+    </div>
     <div id="pokemon-info-modal" class="modal" tabindex="-1"></div>
 <div class="content">
     <header>
@@ -25,7 +30,7 @@
         <div class="searchbar">
             <div class="d-flex h-100">
                 <div class="search">
-                    <input id="search-input" type="text" class="search-input" placeholder="search...">
+                    <input id="search-input" type="text" class="search-input" placeholder="search..." onkeydown="searchOnEnter()">
                     <button id="search-btn" href="#" class="search-icon" onclick="searchPokemon()">
                         <i class="bi bi-search"></i>
                     </button>
