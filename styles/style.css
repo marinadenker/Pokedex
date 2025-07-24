@@ -14,14 +14,15 @@ body {
 
 .loadingoverlay {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
     top: 0;
-    position: absolute;
+    position: fixed;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    overflow-y: scroll;
 }
 
 header {
